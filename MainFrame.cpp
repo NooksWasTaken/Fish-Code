@@ -6,7 +6,9 @@ MainFrame::MainFrame(const wxString& title)
 
     wxFont largerFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
 
-//Text display declarations (to be optimized)
+    fishSound = new wxSound("C:\\Users\\Michael Jerome Reyes\\source\\repos\\Fish_Finals\\Fish_Finals\\FISH.wav");
+
+    //Text display declarations (to be optimized)
     pointTextLabel = new wxStaticText(panel, wxID_ANY, "POINTS:", wxPoint(349, 50), wxSize(60, 40));
     pointTextLabel->SetFont(largerFont);
 
@@ -15,14 +17,14 @@ MainFrame::MainFrame(const wxString& title)
 
     counterText = new wxStaticText(panel, wxID_ANY, "10", wxPoint(383, 130), wxSize(60, 40));
 
-//Gauge bar declaration
+    //Gauge bar declaration
     healthBar = new wxGauge(panel, wxID_ANY, 10, wxPoint(340, 150), wxSize(100, 15));
     healthBar->SetValue(10);
 
-//button declaration
+    //button declaration
     wxButton* button = new wxButton(panel, wxID_ANY, "F I S H", wxPoint(340, 260), wxSize(100, 50));
 
-//Assign an event to the button
+    //Assign an event to the button
     button->Bind(wxEVT_BUTTON, &MainFrame::OnButtonClicked, this);
 }
 //Function when Fish button is clicked
@@ -32,13 +34,12 @@ void MainFrame::OnButtonClicked(wxCommandEvent& event) {
         counter = 10;
         point += 200;
     }
-
-//Updates the health display when the button is clicked and the point display when the bar reaches 0
+    //Updates the health display when the button is clicked and the point display when the bar reaches 0
     pointText->SetLabel(wxString::Format("%d", point));
     counterText->SetLabel(wxString::Format("%d", counter));
     healthBar->SetValue(counter);
-}
 
-//Add function for level scaling
-//Add save function
-//Leaderboard
+    if (fishSound->IsOk()) { // Check if the sound was successfully loaded
+        fishSound->Play(wxSOUND_ASYNC);  // Play asynchronously
+    }
+}
